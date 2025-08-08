@@ -1,17 +1,15 @@
-import isEqual from 'lodash/isEqual';
+import { ValueObject } from 'Domain/models/shared/ValueObject';
 
-export class BookId {
-  private readonly _value: string;
-
+type BookIdValue = string;
+export class BookId extends ValueObject<BookIdValue, 'BookId'> {
   static MAX_LENGTH = 13;
   static MIN_LENGTH = 10;
 
-  constructor(value: string) {
-    this.validate(value)
-    this._value = value;
+  constructor(value: BookIdValue) {
+    super(value)
   }
 
-  private validate(isbn: string): void {
+  protected validate(isbn: BookIdValue): void {
     if(isbn.length < BookId.MIN_LENGTH || isbn.length > BookId.MAX_LENGTH) {
       throw new Error('ISBNの文字数が不正です')
     }
@@ -21,23 +19,19 @@ export class BookId {
     }
   }
 
-  private isValidIsbn10(isbn: string): boolean {
+  private isValidIsbn10(isbn: BookIdValue): boolean {
     return isbn.length === 10;
   }
 
-  private isValidIsbn13(isbn: string): boolean {
+  private isValidIsbn13(isbn: BookIdValue): boolean {
     return isbn.startsWith('978') && isbn.length === 13;
   }
 
-  equals(other: BookId): boolean {
-    return isEqual(this._value, other._value)
-  }
-
-  get value(): string {
+  get value(): BookIdValue {
     return this._value;
   }
 
-  toISBN(): string {
+  toISBN(): BookIdValue {
     if (this._value.length === 10) {
       // ISBNが10桁の場合の、'ISBN' フォーマットに変換します。
       const groupIdentifier = this._value.substring(0, 1); // 国コードなど（1桁）
