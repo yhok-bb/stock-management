@@ -4,6 +4,8 @@
     // ts-nodeがtsconfigのpathsを解決できるようにします。
   },
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
     "outDir": "./dist",
     "strict": true,
     "resolveJsonModule": true,
