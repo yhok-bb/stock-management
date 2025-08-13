@@ -2,7 +2,7 @@ import { Book } from 'Domain/models/Book/Book';
 import { BookId } from 'Domain/models/Book/BookId/BookId';
 import { IBookRepository } from 'Domain/models/Book/IBookRepository';
 
-export class InMemoryBookRepositoty implements IBookRepository {
+export class InMemoryBookRepository implements IBookRepository {
   public DB: {
     [id: string]: Book;
   } = {};
